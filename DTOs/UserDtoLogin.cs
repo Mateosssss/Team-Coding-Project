@@ -1,0 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ProjektZespołówka.DTOs
+{
+    public class UserDtoLogin
+    {
+        public string email { get; set; }=null!;
+        public string password { get; set; }=null!;
+    }
+}
