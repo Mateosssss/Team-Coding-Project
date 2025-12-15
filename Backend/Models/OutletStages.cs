@@ -7,7 +7,7 @@ namespace ProjektZespołówka.Models
 {
     public class OutletStages
     {
-        public WorkStages WorkStage { get; set; }
-        public Outlet Outlet { get; set; }
+        public Guid WorkStageId { get; set; }
+        public Guid OutletId { get; set; }
     }
 }

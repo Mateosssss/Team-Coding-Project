@@ -8,9 +8,9 @@ namespace ProjektZespołówka.Models
     public class ExecutiveDocuments
     {
         public Guid Id { get; set; }
-        public Project Project { get; set; }
-        public FileAttachment Document { get; set; }
+        public Guid ProjectId { get; set; }
+        public Guid DocumentId { get; set; }
         public DateTime UploadedAt { get; set; }
-        public User Recipient { get; set; }
+        public Guid RecipientId { get; set; }
     }
 }

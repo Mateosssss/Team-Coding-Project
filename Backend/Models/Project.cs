@@ -13,9 +13,9 @@ namespace ProjektZespołówka.Models
         public string ContactPhone { get; set; } = null!;
         public string ContactEmail { get; set; } = null!;
         public Helpers.ProjectStatus Status { get; set; } = Helpers.ProjectStatus.Planned;
-        public User Manager { get; set; } = null!;
-        public User Investor { get; set; } = null!;
+        public Guid ManagerId { get; set; }
+        public Guid InvestorId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public Localization? Location { get; set; }
+        public Guid LocationId { get; set; }
     }
 }

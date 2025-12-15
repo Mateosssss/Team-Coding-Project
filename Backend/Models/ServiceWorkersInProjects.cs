@@ -7,8 +7,8 @@ namespace ProjektZespołówka.Models
 {
     public class ServiceWorkerInProject
     {
-        public Project Project { get; set; } = null!;
-        public User ServiceWorker { get; set; } = null!;
+        public Guid ProjectId { get; set; } 
+        public Guid ServiceWorkerId { get; set; } 
         public DateTime AssignedAt { get; set; } = DateTime.UtcNow; 
     }
 }

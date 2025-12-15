@@ -7,7 +7,7 @@ namespace ProjektZespołówka.Models
 {
     public class RoomStages
     {
-        public WorkStages WorkStage { get; set; }
-        public Room Room { get; set; }
+        public Guid WorkStageId { get; set; }
+        public Guid RoomId { get; set; }
     }
 }

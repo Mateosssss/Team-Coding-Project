@@ -8,7 +8,7 @@ namespace ProjektZespołówka.Models
     public class Room
     {
         public Guid Id { get; set; }
-        public Levels Level { get; set; }
+        public Guid LevelId { get; set; }
         public int Number { get; set; }
         public string TechnicalName { get; set; }
         public int OutletCount { get; set; }

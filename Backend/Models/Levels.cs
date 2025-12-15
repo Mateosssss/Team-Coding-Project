@@ -8,11 +8,11 @@ namespace ProjektZespołówka.Models
     public class Levels
     {
         public Guid Id { get; set; }
-        public Project Project { get; set; } = null!;
+        public Guid ProjectId { get; set; }
         public int LevelNumber { get; set; }
         public string TechnicalDescription { get; set; } = null!;
         public string CableType { get; set; } = null!;
-        public FileAttachment? LevelPlan { get; set; }
+        public string LevelPlanFileAttachmentId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

@@ -30,21 +30,15 @@ namespace ProjektZespołówka.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(UserDtoRegister request)
+        public async Task<ActionResult<UserDtoRegister>> Register(UserDtoRegister request)
         {
             var user = await _authService.RegisterAsync(request);
-            if(user == null)
-            {
-                return BadRequest("User already exists");
-            }
             return Ok(user);
         }
         [HttpPost("login")]
         public async Task<ActionResult<TokenResponseDto>> Login(UserDtoLogin request)
         {
             var result = await _authService.LoginAsync(request);
-            if(result is null)
-                return BadRequest("Invalid Username or Password");
             return Ok(result);
         }
         [HttpPost("refresh-token")]
@@ -56,19 +50,5 @@ namespace ProjektZespołówka.Controllers
             return Ok(result);
         }
 
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult AuthenticatedOnlyEndpoint()
-        {
-            return Ok();
-        }
-
-        [Authorize(Roles = UserRoleStrings.Admin)]
-        [HttpGet("admin-only")]
-        public IActionResult AdminOnlyEndpoint()
-        {
-            return Ok();
-        }
     }
 }

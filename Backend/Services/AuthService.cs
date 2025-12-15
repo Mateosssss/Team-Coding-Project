@@ -19,12 +19,12 @@ namespace ProjektZespołówka.Services
     {
         public async Task<TokenResponseDto> LoginAsync(UserDtoLogin request)
         {
-            var user = await context.Users.FirstOrDefaultAsync(u => u.email == request.email);
+            var user = await context.Users.FirstOrDefaultAsync(u => u.email == request.Email);
             if (user is null)
             {
                 return null;
             }
-            if (new PasswordHasher<User>().VerifyHashedPassword(user, user.passwordHash, request.password)
+            if (new PasswordHasher<User>().VerifyHashedPassword(user, user.passwordHash, request.Password)
                 == PasswordVerificationResult.Failed)
             {
                 return null;
@@ -45,7 +45,7 @@ namespace ProjektZespołówka.Services
 
         public async Task<User?> RegisterAsync(UserDtoRegister request)
         {
-            if(await context.Users.AnyAsync(u => u.email == request.email))
+            if(await context.Users.AnyAsync(u => u.email == request.Email))
             {
                 return null;
             }
@@ -53,30 +53,25 @@ namespace ProjektZespołówka.Services
             var user = new User();
 
             var hashPassword = new PasswordHasher<User>()
-                .HashPassword(user,request.password);
-            user.email = request.email;
+                .HashPassword(user,request.Password);
+            user.email = request.Email;
             user.passwordHash=hashPassword;
 
             context.Users.Add(user);
             await context.SaveChangesAsync();
             return user;
         }
-        public async Task<TokenResponseDto> RefreshTokenAsync(RefreshTokenRequestDto request)
+        public async Task<TokenResponseDto?> RefreshTokenAsync(RefreshTokenRequestDto request)
         {
-            var user = await ValidateRefreshTokenAsync(request.UserId,request.RefreshToken);
-            if(user is null)
-                return null;
-            return await CreateTokenResponse(user);
-        }
+            var user = await context.Users
+                .FirstOrDefaultAsync(u =>
+                u.RefreshToken == request.RefreshToken &&
+                u.RefreshTokenExpiryTime > DateTime.UtcNow);
 
-        private async Task<User?> ValidateRefreshTokenAsync(Guid userId,string refreshToken)
-        {
-            var user = await context.Users.FindAsync(userId);
-            if(user is null || 
-                user.RefreshToken != refreshToken || 
-                user.RefreshTokenExpiryTime<DateTime.UtcNow
-            )return null;
-            return user;
+            if (user == null)
+                return null;
+
+            return await CreateTokenResponse(user);
         }
 
         private string GenereteRefreshToken()
@@ -100,18 +95,18 @@ namespace ProjektZespołówka.Services
             {
               new Claim(ClaimTypes.Name,user.email),
               new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-              new Claim(ClaimTypes.Role,nameof(user.role))
+              new Claim(ClaimTypes.Role,user.role.ToString())
             };
 
             var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(configuration.GetValue<string>("AppSettings:Token")!)
+                Encoding.UTF8.GetBytes(configuration["AppSettings:Token"]!)
             );
 
             var creds = new SigningCredentials(key,SecurityAlgorithms.HmacSha512);
 
             var tokenDescriptor = new JwtSecurityToken(
-                issuer:configuration.GetValue<string>("AppSettings:Issuer"),
-                audience:configuration.GetValue<string>("AppSettings:Audience"),
+                issuer:configuration["AppSettings:Issuer"],
+                audience:configuration["AppSettings:Audience"],
                 claims:claims,
                 expires:DateTime.UtcNow.AddDays(1),
                 signingCredentials:creds

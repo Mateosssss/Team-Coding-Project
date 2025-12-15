@@ -8,13 +8,13 @@ namespace ProjektZespołówka.Models
     public class NetworkRack
     {
         public Guid Id { get; set; }
-        public Project Project { get; set; }
+        public Guid ProjectId { get; set; }
         public string Model { get; set; }
         public string Size { get; set; }
         public string Location { get; set; }
-        public FileAttachment FrontViewImage { get; set; }
-        public FileAttachment SideViewImage { get; set; }
-        public FileAttachment RearViewImage { get; set; }
+        public Guid FrontViewImageId { get; set; }
+        public Guid SideViewImageId { get; set; }
+        public Guid RearViewImageId { get; set; }
         public DateTime InstallationDate { get; set; }
     }
 }
