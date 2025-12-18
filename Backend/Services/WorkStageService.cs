@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Backend.DTOs;
 using Microsoft.EntityFrameworkCore;
 using ProjektZespołówka.Data;
+using ProjektZespołówka.DTOs;
+using ProjektZespołówka.DTOs.Create;
 using ProjektZespołówka.Models;
 
 namespace Backend.Services

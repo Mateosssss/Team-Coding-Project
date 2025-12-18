@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProjektZespołówka.Models;
 
-namespace Backend.DTOs.Create
+namespace ProjektZespołówka.DTOs.Create
 {
     public class CreateProjectDto
     {

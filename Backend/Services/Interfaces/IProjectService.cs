@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Backend.DTOs.Create;
+using ProjektZespołówka.DTOs.Create;
 using ProjektZespołówka.DTOs;
 
-namespace Backend.Services.Interfaces
+namespace ProjektZespołówka.Services.Interfaces
 {
     public interface IProjectService
     {
