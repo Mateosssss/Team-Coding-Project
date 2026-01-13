@@ -59,7 +59,8 @@ namespace ProjektZespołówka.Models
             Outlet,
             Room,
             Floor,
-            Stage
+            Stage,
+            Project
         }
         public enum CommentStatus
         {
