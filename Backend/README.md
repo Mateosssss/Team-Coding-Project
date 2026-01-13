@@ -1,3 +1,10 @@
+Wstępny setup bazy danych (potrzebne ssms 20)
+
+dotnet tool install --global dotnet-ef (w razie jakby się nie chciało zbudować)
+dotnet ef migrations add InitialCreate (w razie jakby się nie chciało zbudować)
+dotnet ef database update --connection "Server=localhost;Database=CloudWireDb;Trusted_Connection=True;TrustServerCertificate=True;" (konieczne by sie baza zbudowała)
+sqlcmd -S localhost -E -Q "SELECT name, physical_name FROM sys.master_files WHERE database_id = DB_ID('CloudWireDb');" (do znalezienia lokalizacji bazy na dysku)
+
 # Introduction 
 TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
 
