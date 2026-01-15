@@ -17,6 +17,9 @@ kotlinSerialization = "1.9.0"
 kotlinxDatetime = "0.7.1"
 koin = "4.1.1"
 ktor = "3.3.3"
+materialIcons = "1.7.7"
+materialIconsExtendedVersion = "1.7.3"
+
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -48,6 +51,8 @@ androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle
 jetbrains-compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref= "navigationCompose"}
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+androidx-material-icons = { module = "org.jetbrains.compose.material:material-icons", version.ref = "materialIcons" }
+material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsExtendedVersion" }
 
 
 [plugins]
