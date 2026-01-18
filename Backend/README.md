@@ -9,7 +9,6 @@ dotnet ef migrations remove
 dotnet ef migrations add InitialMigration
 dotnet ef database update
 
----
 dotnet tool install --global dotnet-ef (w razie jakby się nie chciało zbudować)
 dotnet ef migrations add InitialCreate (w razie jakby się nie chciało zbudować)
 dotnet ef database update --connection "Server=localhost;Database=CloudWireDb;Trusted_Connection=True;TrustServerCertificate=True;" (konieczne by sie baza zbudowała)
