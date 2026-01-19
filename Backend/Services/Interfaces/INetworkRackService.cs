@@ -1,17 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ProjektZespołówka.DTOs;
 using ProjektZespołówka.DTOs.Create;
+using ProjektZespołówka.Models;
 
-namespace Backend.Services.Interfaces
+namespace ProjektZespołówka.Services.Interfaces
 {
-    public interface INetworkRackService
+    public interface INetworkRackService : IGenericService<NetworkRack, NetworkRackDto, CreateNetworkRackDto>
     {
-        public Task<NetworkRackDto> GetById(Guid id);
-        public Task Create(CreateNetworkRackDto dto);
-        public Task Update(Guid id, CreateNetworkRackDto dto);
-        public Task Delete(Guid id);
+        /// <summary>
+        /// Get network racks by project ID
+        /// </summary>
+        Task<IEnumerable<NetworkRackDto>> GetByProjectIdAsync(Guid projectId);
     }
 }

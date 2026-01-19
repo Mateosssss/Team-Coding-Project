@@ -8,6 +8,7 @@ namespace ProjektZespołówka.DTOs
 {
     public class CommentsDto
     {
+        public Guid Id { get; set; }
         public Helpers.EntityType EntityType { get; set; }
         public Guid EntityId { get; set; }
         public Guid AuthorId { get; set; }

@@ -1,15 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using ProjektZespołówka.Data;
 using ProjektZespołówka.Services;
+using ProjektZespołówka.Services.Interfaces;
 using ProjektZespołówka.Models;
 using Scalar.AspNetCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Microsoft.Identity.Web;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using ProjektZespołówka.Validators;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,17 +27,27 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         });
 });
 
-builder.Services.AddIdentity<User, IdentityRole<Guid>>(options => 
-{
-    options.Password.RequireDigit = false;
-    options.Password.RequiredLength = 6;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequireUppercase = false;
-})
-.AddEntityFrameworkStores<AppDbContext>()
-.AddDefaultTokenProviders();
+// Add Microsoft Identity Web
+builder.Services.AddMicrosoftIdentityWebApiAuthentication(builder.Configuration, "AzureAd");
 
+// Register services
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<ILevelService, LevelService>();
+builder.Services.AddScoped<IOutletService, OutletService>();
+builder.Services.AddScoped<INetworkRackService, NetworkRackService>();
+builder.Services.AddScoped<IRackPanelService, RackPanelService>();
+builder.Services.AddScoped<ILocalizationService, LocalizationService>();
+builder.Services.AddScoped<IAddonsService, AddonsService>();
+builder.Services.AddScoped<ICommentsService, CommentsService>();
+builder.Services.AddScoped<IMeasurmentsService, MeasurmentsService>();
+builder.Services.AddScoped<IExecutiveDocumentsService, ExecutiveDocumentsService>();
+builder.Services.AddScoped<IWorkStagesService, WorkStagesService>();
+
+builder.Services.AddFluentValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddAuthentication(options => 
 {

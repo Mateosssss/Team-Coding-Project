@@ -1,18 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ProjektZespołówka.DTOs;
 using ProjektZespołówka.DTOs.Create;
 using ProjektZespołówka.Models;
 
-namespace Backend.Services.Interfaces
+namespace ProjektZespołówka.Services.Interfaces
 {
-    public interface IRackPanelService
+    public interface IRackPanelService : IGenericService<RackPanel, RackPanelDto, CreateRackPanelDto>
     {
-        public Task<RackPanelDto> GetById(Guid id);
-        public Task Create(CreateRackPanelDto dto);
-        public Task Update(Guid id, CreateRackPanelDto dto);
-        public Task Delete(Guid id);
+        /// <summary>
+        /// Get rack panels by network rack ID
+        /// </summary>
+        Task<IEnumerable<RackPanelDto>> GetByNetworkRackIdAsync(Guid networkRackId);
     }
 }

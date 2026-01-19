@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ProjektZespołówka.DTOs;
 using ProjektZespołówka.DTOs.Create;
+using ProjektZespołówka.Models;
 
-namespace Backend.Services.Interfaces
+namespace ProjektZespołówka.Services.Interfaces
 {
-    public interface IExecutiveDocumentsService
+    public interface IExecutiveDocumentsService : IGenericService<ExecutiveDocuments, ExecutiveDocumentsDto, CreateExecutiveDocumentsDto>
     {
-        public Task<ExecutiveDocumentsDto> GetById(Guid id);
-        public Task Create(CreateExecutiveDocumentsDto dto);
-        public Task Update(Guid id, CreateExecutiveDocumentsDto dto);
-        public Task Delete(Guid id);
     }
 }

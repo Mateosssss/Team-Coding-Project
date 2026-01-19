@@ -11,6 +11,5 @@ namespace ProjektZespołówka.DTOs.Create
         public int EntityId { get; set; }
         public Guid FileAttachmentId { get; set; }
         public Guid UploadedByUserId { get; set; }
-        public DateTime UploadedAt { get; set; }
     }
 }

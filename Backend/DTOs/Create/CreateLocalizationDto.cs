@@ -12,6 +12,5 @@ namespace ProjektZespołówka.DTOs.Create
         public string Address { get; set; } = null!;
         public string ContactEmail { get; set; } = null!;
         public string ContactPhone { get; set; } = null!;
-        public DateTime createdAt { get; set; } = DateTime.UtcNow;
     }
 }

@@ -1,17 +1,21 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using ProjektZespołówka.DTOs.Create;
 using ProjektZespołówka.DTOs;
+using ProjektZespołówka.DTOs.Create;
+using ProjektZespołówka.Models;
 
 namespace ProjektZespołówka.Services.Interfaces
 {
-    public interface IProjectService
+    public interface IProjectService : IGenericService<Project, ProjectDto, CreateProjectDto>
     {
-        public Task<ProjectDto> GetById(Guid id);
-        public Task Create(CreateProjectDto dto);
-        public Task Update(Guid id, CreateProjectDto dto);
-        public Task Delete(Guid id);
+        /// <summary>
+        /// Get projects by manager ID
+        /// </summary>
+        Task<IEnumerable<ProjectDto>> GetByManagerIdAsync(Guid managerId);
+
+        /// <summary>
+        /// Get projects by location ID
+        /// </summary>
+        Task<IEnumerable<ProjectDto>> GetByLocationIdAsync(Guid locationId);
     }
 }

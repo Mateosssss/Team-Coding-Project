@@ -1,17 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ProjektZespołówka.DTOs;
 using ProjektZespołówka.DTOs.Create;
+using ProjektZespołówka.Models;
 
-namespace Backend.Services.Interfaces
+namespace ProjektZespołówka.Services.Interfaces
 {
-    public interface IRoomService
+    public interface IRoomService : IGenericService<Room, RoomDto, CreateRoomDto>
     {
-        public Task<RoomDto> GetById(Guid id);
-        public Task Create(CreateRoomDto dto);
-        public Task Update(Guid id, CreateRoomDto dto);
-        public Task Delete(Guid id);
+        /// <summary>
+        /// Get rooms by level ID
+        /// </summary>
+        Task<IEnumerable<RoomDto>> GetByLevelIdAsync(Guid levelId);
     }
 }

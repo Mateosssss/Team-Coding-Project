@@ -8,6 +8,7 @@ namespace ProjektZespołówka.DTOs
 {
     public class ProjectDto
     {
+        public Guid Id { get; set; }
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
         public string ContactPhone { get; set; } = null!;
@@ -15,6 +16,7 @@ namespace ProjektZespołówka.DTOs
         public Helpers.ProjectStatus Status { get; set; }
         public Guid ManagerId { get; set; }
         public Guid InvestorId { get; set; }
+        public DateTime CreatedAt { get; set; }
         public Guid LocationId { get; set; }
     }
 }

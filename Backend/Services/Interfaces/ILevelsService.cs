@@ -1,17 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ProjektZespołówka.DTOs;
 using ProjektZespołówka.DTOs.Create;
+using ProjektZespołówka.Models;
 
-namespace Backend.Services.Interfaces
+namespace ProjektZespołówka.Services.Interfaces
 {
-    public interface ILevelsService
+    public interface ILevelService : IGenericService<Levels, LevelsDto, CreateLevelsDto>
     {
-        public Task<LevelsDto> GetById(Guid id);
-        public Task Create(CreateLevelsDto dto);
-        public Task Update(Guid id, CreateLevelsDto dto);
-        public Task Delete(Guid id);
+        /// <summary>
+        /// Get levels by project ID
+        /// </summary>
+        Task<IEnumerable<LevelsDto>> GetByProjectIdAsync(Guid projectId);
     }
 }

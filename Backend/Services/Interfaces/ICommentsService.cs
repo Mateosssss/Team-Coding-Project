@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ProjektZespołówka.DTOs;
 using ProjektZespołówka.DTOs.Create;
+using ProjektZespołówka.Models;
 
-namespace Backend.Services.Interfaces
+namespace ProjektZespołówka.Services.Interfaces
 {
-    public interface ICommentsService
+    public interface ICommentsService : IGenericService<Comments, CommentsDto, CreateCommentsDto>
     {
-        public Task<CommentsDto> GetById(Guid id);
-        public Task Create(CreateCommentsDto dto);
-        public Task Update(Guid id, CreateCommentsDto dto);
-        public Task Delete(Guid id);
     }
 }

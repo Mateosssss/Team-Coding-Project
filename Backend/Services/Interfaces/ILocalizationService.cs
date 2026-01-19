@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ProjektZespołówka.DTOs;
 using ProjektZespołówka.DTOs.Create;
+using ProjektZespołówka.Models;
 
-namespace Backend.Services.Interfaces
+namespace ProjektZespołówka.Services.Interfaces
 {
-    public interface ILocalizationService
+    public interface ILocalizationService : IGenericService<Localization, LocalizationDto, CreateLocalizationDto>
     {
-        public Task<LocalizationDto> GetById(Guid id);
-        public Task Create(CreateLocalizationDto dto);
-        public Task Update(Guid id, CreateLocalizationDto dto);
-        public Task Delete(Guid id);
     }
 }

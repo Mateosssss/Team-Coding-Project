@@ -13,6 +13,5 @@ namespace ProjektZespołówka.DTOs.Create
         public Guid AuthorId { get; set; }
         public string Content { get; set; }
         public Helpers.CommentStatus Status { get; set; }
-        public DateTime CreatedAt { get; set; }    
     }
 }

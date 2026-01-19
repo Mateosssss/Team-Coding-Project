@@ -6,11 +6,11 @@ using ProjektZespołówka.Models;
 
 namespace ProjektZespołówka.Services.Interfaces
 {
-    public interface IOutletService : IGenericService<Outlet, OutletDto, CreateOutletDto>
+    public interface ILevelService : IGenericService<Levels, LevelsDto, CreateLevelsDto>
     {
         /// <summary>
-        /// Get outlets by room ID
+        /// Get levels by project ID
         /// </summary>
-        Task<IEnumerable<OutletDto>> GetByRoomIdAsync(Guid roomId);
+        Task<IEnumerable<LevelsDto>> GetByProjectIdAsync(Guid projectId);
     }
 }

@@ -7,6 +7,7 @@ namespace ProjektZespołówka.DTOs
 {
     public class RackPanelDto
     {
+        public Guid Id { get; set; }
         public Guid NetworkRackId { get; set; }
         public string Type { get; set; }
         public int PortNumber { get; set; }

@@ -7,6 +7,7 @@ namespace ProjektZespołówka.DTOs
 {
     public class ExecutiveDocumentsDto
     {
+        public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
         public Guid DocumentId { get; set; }
         public DateTime UploadedAt { get; set; }

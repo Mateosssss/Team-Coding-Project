@@ -6,7 +6,7 @@ using ProjektZespołówka.Models;
 
 namespace ProjektZespołówka.Services.Interfaces
 {
-    public interface IMeasurmentsService : IGenericService<Measurments, MeasurmentsDto, CreateMeasurmentsDto>
+    public interface IWorkStagesService : IGenericService<WorkStages, WorkStagesDto, CreateWorkStagesDto>
     {
     }
 }

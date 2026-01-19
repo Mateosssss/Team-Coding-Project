@@ -8,6 +8,8 @@ namespace ProjektZespołówka.DTOs
 {
     public class MeasurmentsDto
     {
+        public Guid Id { get; set; }
+        public Guid OutletId { get; set; }
         public Guid ServiceWorkerId { get; set; }
         public Guid AttachmentId { get; set; }
         public MeasurementType Type { get; set; }
