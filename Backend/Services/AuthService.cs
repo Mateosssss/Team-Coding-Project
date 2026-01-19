@@ -1,115 +1,113 @@
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using ProjektZespołówka.Data;
 using ProjektZespołówka.DTOs;
 using ProjektZespołówka.Models;
 
 namespace ProjektZespołówka.Services
 {
-    public class AuthService(AppDbContext context,IConfiguration configuration) : IAuthService
+    public class AuthService(
+        UserManager<User> userManager,
+        SignInManager<User> signInManager,
+        IConfiguration configuration) : IAuthService
     {
-        public async Task<TokenResponseDto> LoginAsync(UserDtoLogin request)
+        public async Task<TokenResponseDto?> LoginAsync(UserDtoLogin request)
         {
-            var user = await context.Users.FirstOrDefaultAsync(u => u.email == request.Email);
-            if (user is null)
-            {
-                return null;
-            }
-            if (new PasswordHasher<User>().VerifyHashedPassword(user, user.passwordHash, request.Password)
-                == PasswordVerificationResult.Failed)
-            {
-                return null;
-            }
+            var user = await userManager.FindByEmailAsync(request.Email);
+            if (user is null) return null;
 
-            TokenResponseDto response = await CreateTokenResponse(user);
-            return response;
+            var result = await signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: false);
+
+            if (!result.Succeeded) return null;
+
+            return await CreateTokenResponse(user);
+        }
+
+    public async Task<User?> RegisterAsync(UserDtoRegister request)
+    {
+       var existingUser = await userManager.FindByEmailAsync(request.Email);
+       if (existingUser != null) return null;
+
+       var user = new User 
+       { 
+           Email = request.Email, 
+           UserName = request.Email, 
+           Name_Surname = request.Name_Surname,
+           createdAt = DateTime.UtcNow,
+
+           role = Helpers.UserRole.ServiceWorker 
+       };
+
+      
+       var result = await userManager.CreateAsync(user, request.Password);
+
+       if (!result.Succeeded)
+       {
+           return null;
+       }
+
+       return user;
+    }
+
+        public async Task<TokenResponseDto?> RefreshTokenAsync(RefreshTokenRequestDto request)
+        {
+            var user = userManager.Users.FirstOrDefault(u => 
+                u.RefreshToken == request.RefreshToken && 
+                u.RefreshTokenExpiryTime > DateTime.UtcNow);
+
+            if (user == null) return null;
+
+            return await CreateTokenResponse(user);
         }
 
         private async Task<TokenResponseDto> CreateTokenResponse(User user)
         {
             return new TokenResponseDto
             {
-                AccessToken = CreateToken(user),
+                AccessToken = await CreateToken(user),
                 RefreshToken = await GenerateAndSaveRefreshTokenAsync(user)
             };
         }
 
-        public async Task<User?> RegisterAsync(UserDtoRegister request)
-        {
-            if(await context.Users.AnyAsync(u => u.email == request.Email))
-            {
-                return null;
-            }
-
-            var user = new User();
-
-            var hashPassword = new PasswordHasher<User>()
-                .HashPassword(user,request.Password);
-            user.email = request.Email;
-            user.passwordHash=hashPassword;
-
-            context.Users.Add(user);
-            await context.SaveChangesAsync();
-            return user;
-        }
-        public async Task<TokenResponseDto?> RefreshTokenAsync(RefreshTokenRequestDto request)
-        {
-            var user = await context.Users
-                .FirstOrDefaultAsync(u =>
-                u.RefreshToken == request.RefreshToken &&
-                u.RefreshTokenExpiryTime > DateTime.UtcNow);
-
-            if (user == null)
-                return null;
-
-            return await CreateTokenResponse(user);
-        }
-
-        private string GenereteRefreshToken()
+        private async Task<string> GenerateAndSaveRefreshTokenAsync(User user)
         {
             var randomNumber = new byte[32];
             using var rng = RandomNumberGenerator.Create();
             rng.GetBytes(randomNumber);
-            return Convert.ToBase64String(randomNumber);
-        }
-        private async Task<string> GenerateAndSaveRefreshTokenAsync(User user)
-        {
-            var refreshToken=GenereteRefreshToken();
+            var refreshToken = Convert.ToBase64String(randomNumber);
+
             user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(30);
-            await context.SaveChangesAsync();
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+
+            await userManager.UpdateAsync(user);
+            
             return refreshToken;
         }
-        private string CreateToken(User user)
+
+        private async Task<string> CreateToken(User user)
         {
             var claims = new List<Claim>
             {
-              new Claim(ClaimTypes.Name,user.email),
-              new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-              new Claim(ClaimTypes.Role,user.role.ToString())
+                new Claim(ClaimTypes.Name, user.Email!),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.role.ToString())
             };
 
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(configuration["AppSettings:Token"]!)
             );
 
-            var creds = new SigningCredentials(key,SecurityAlgorithms.HmacSha512);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
             var tokenDescriptor = new JwtSecurityToken(
-                issuer:configuration["AppSettings:Issuer"],
-                audience:configuration["AppSettings:Audience"],
-                claims:claims,
-                expires:DateTime.UtcNow.AddDays(1),
-                signingCredentials:creds
+                issuer: configuration["AppSettings:Issuer"],
+                audience: configuration["AppSettings:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(15),
+                signingCredentials: creds
             );
 
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);

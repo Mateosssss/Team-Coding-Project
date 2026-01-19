@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using ProjektZespołówka.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
 
 namespace ProjektZespołówka.Data
 {
-    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<User, IdentityRole<Guid>, Guid>(options)
     {
         public DbSet<User> Users { get; set; }
         public DbSet<WorkStages> WorkStages { get; set; }
@@ -30,17 +32,21 @@ namespace ProjektZespołówka.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>(entity =>
+           modelBuilder.Entity<User>(entity =>
             {
+                // Mapujemy Twoją klasę User do Twojej tabeli "Użytkownicy"
                 entity.ToTable("Użytkownicy");
-                entity.HasKey(u => u.Id);
+                
                 entity.Property(u => u.Id).HasColumnName("id");
-                entity.Property(u => u.email).HasColumnName("email").HasMaxLength(100);
-                entity.Property(u => u.passwordHash).HasColumnName("hasło").HasMaxLength(255);
+                entity.Property(u => u.Email).HasColumnName("email").HasMaxLength(100);
+                entity.Property(u => u.PasswordHash).HasColumnName("hasło").HasMaxLength(255);
+                
                 entity.Property(u => u.Name_Surname).HasColumnName("imię_nazwisko").HasMaxLength(150);
                 entity.Property(u => u.role).HasColumnName("rola").HasMaxLength(20);
                 entity.Property(u => u.createdAt).HasColumnName("data_rejestracji");
-                entity.HasIndex(u => u.email).IsUnique();
+                
+                entity.Property(u => u.RefreshToken).HasColumnName("refresh_token");
+                entity.Property(u => u.RefreshTokenExpiryTime).HasColumnName("refresh_token_expiration");
             });
 
             modelBuilder.Entity<Localization>(entity =>

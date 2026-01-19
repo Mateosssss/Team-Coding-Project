@@ -2,18 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProjektZespołówka.Models
 {
-    public class User
+   public class User : IdentityUser<Guid>
     {
-        public Guid Id { get; set; }
-        public string email { get; set; }
-        public string passwordHash { get; set; }
-        public string Name_Surname { get; set; }
+        // Pól Id, email, passwordHash JUŻ TU NIE WPISUJEMY - są w IdentityUser
+        
+        public string Name_Surname { get; set; } = string.Empty;
         public Helpers.UserRole role { get; set; }
-        public DateTime createdAt { get; set; } 
-        public string? RefreshToken {get;set;}
-        public DateTime? RefreshTokenExpiryTime {get;set;}
+        public DateTime createdAt { get; set; } = DateTime.UtcNow;
+        
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 }

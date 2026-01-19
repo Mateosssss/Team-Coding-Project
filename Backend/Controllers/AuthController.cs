@@ -1,54 +1,51 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using ProjektZespołówka.DTOs;
 using ProjektZespołówka.Models;
 using ProjektZespołówka.Services;
-using ProjektZespołówka.Utils;
 
 namespace ProjektZespołówka.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController: ControllerBase
+    public class AuthController(IAuthService authService) : ControllerBase
     {
-        private readonly IAuthService _authService;
-
-        public AuthController( IAuthService authService)
-        {
-           _authService=authService;
-        }
-
         [HttpPost("register")]
-        public async Task<ActionResult<UserDtoRegister>> Register(UserDtoRegister request)
+        public async Task<ActionResult<User>> Register(UserDtoRegister request)
         {
-            var user = await _authService.RegisterAsync(request);
+            var user = await authService.RegisterAsync(request);
+            
+            if (user == null)
+            {
+                return BadRequest("Rejestracja nie powiodła się. Użytkownik może już istnieć.");
+            }
+
             return Ok(user);
         }
+
         [HttpPost("login")]
         public async Task<ActionResult<TokenResponseDto>> Login(UserDtoLogin request)
         {
-            var result = await _authService.LoginAsync(request);
-            return Ok(result);
-        }
-        [HttpPost("refresh-token")]
-        public async Task<ActionResult<TokenResponseDto>> RefreshToken(RefreshTokenRequestDto request)
-        {
-            var result = await _authService.RefreshTokenAsync(request);
-            if(result is null || result.AccessToken is null || result.RefreshToken is null)
-                return Unauthorized("Invalid refresh token");
+            var result = await authService.LoginAsync(request);
+
+            if (result == null)
+            {
+                return Unauthorized("Nieprawidłowy adres e-mail lub hasło.");
+            }
+
             return Ok(result);
         }
 
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult<TokenResponseDto>> RefreshToken(RefreshTokenRequestDto request)
+        {
+            var result = await authService.RefreshTokenAsync(request);
+
+            if (result == null)
+            {
+                return Unauthorized("Nieprawidłowy lub wygasły token odświeżania.");
+            }
+
+            return Ok(result);
+        }
     }
 }
