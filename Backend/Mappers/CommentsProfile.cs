@@ -61,7 +61,7 @@ namespace ProjektZespołówka.Mappers
                 )
                 .ForMember(
                     dest => dest.CreatedAt, 
-                    opt => opt.MapFrom(src => src.CreatedAt)
+                    opt => opt.Ignore()
                 );
         }
     }

@@ -16,7 +16,6 @@ namespace ProjektZespołówka.Validators
             RuleFor(x => x.AuthorId).NotEmpty().WithMessage("Author Id is required");
             RuleFor(x => x.Content).NotEmpty().WithMessage("Content is required");
             RuleFor(x => x.Status).IsInEnum().WithMessage("Invalid Status");
-            RuleFor(x => x.CreatedAt).NotEmpty().WithMessage("Created At is required");
         }
     }
 }

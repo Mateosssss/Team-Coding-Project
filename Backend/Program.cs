@@ -4,12 +4,12 @@ using ProjektZespołówka.Services;
 using ProjektZespołówka.Services.Interfaces;
 using ProjektZespołówka.Models;
 using Scalar.AspNetCore;
-using Microsoft.Identity.Web;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using ProjektZespołówka.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Identity;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,14 +27,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         });
 });
 
-// Add Microsoft Identity Web
-builder.Services.AddMicrosoftIdentityWebApiAuthentication(builder.Configuration, "AzureAd");
+// Add Identity
+builder.Services.AddIdentity<User, IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
 // Register services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
-builder.Services.AddScoped<ILevelService, LevelService>();
+builder.Services.AddScoped<ILevelsService, LevelService>();
 builder.Services.AddScoped<IOutletService, OutletService>();
 builder.Services.AddScoped<INetworkRackService, NetworkRackService>();
 builder.Services.AddScoped<IRackPanelService, RackPanelService>();

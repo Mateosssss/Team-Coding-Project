@@ -9,7 +9,7 @@ using ProjektZespołówka.Services.Interfaces;
 
 namespace ProjektZespołówka.Services
 {
-    public class LevelService : GenericService<Levels, LevelsDto, CreateLevelsDto>, ILevelService
+    public class LevelService : GenericService<Levels, LevelsDto, CreateLevelsDto>, ILevelsService
     {
         public LevelService(AppDbContext context, IMapper mapper) : base(context, mapper)
         {

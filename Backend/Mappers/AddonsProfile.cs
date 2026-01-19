@@ -44,7 +44,7 @@ namespace ProjektZespołówka.Mappers
                     opt => opt.MapFrom(src => src.UploadedByUserId))
                 .ForMember(
                     dest => dest.UploadedAt, 
-                    opt => opt.MapFrom(src => src.UploadedAt));
+                    opt => opt.Ignore());
         }
     }
 }

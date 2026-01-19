@@ -15,7 +15,6 @@ namespace ProjektZespołówka.Validators
             RuleFor(x => x.EntityId).NotEmpty().WithMessage("Entity Id is required");
             RuleFor(x => x.FileAttachmentId).NotEmpty().WithMessage("File Attachment Id is required");
             RuleFor(x => x.UploadedByUserId).NotEmpty().WithMessage("Uploaded By User Id is required");
-            RuleFor(x => x.UploadedAt).NotEmpty().WithMessage("Uploaded At is required");
         }
     }
 }

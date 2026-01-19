@@ -16,7 +16,6 @@ namespace ProjektZespołówka.Validators
             RuleFor(x => x.Address).NotEmpty().WithMessage("Address is required");
             RuleFor(x => x.ContactEmail).NotEmpty().EmailAddress().WithMessage("Valid Contact Email is required");
             RuleFor(x => x.ContactPhone).NotEmpty().WithMessage("Contact Phone is required");
-            RuleFor(x => x.createdAt).NotEmpty().WithMessage("Created At is required");
         }
     }
 }

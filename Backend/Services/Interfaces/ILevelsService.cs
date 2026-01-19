@@ -6,7 +6,7 @@ using ProjektZespołówka.Models;
 
 namespace ProjektZespołówka.Services.Interfaces
 {
-    public interface ILevelService : IGenericService<Levels, LevelsDto, CreateLevelsDto>
+    public interface ILevelsService : IGenericService<Levels, LevelsDto, CreateLevelsDto>
     {
         /// <summary>
         /// Get levels by project ID

@@ -47,7 +47,7 @@ namespace ProjektZespołówka.Mappers
                     opt => opt.MapFrom(src => src.ContactPhone))
                 .ForMember(
                     dest => dest.createdAt, 
-                    opt => opt.MapFrom(src => src.createdAt));
+                    opt => opt.Ignore());
         }
     }
 }

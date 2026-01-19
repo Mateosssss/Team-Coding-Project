@@ -25,40 +25,40 @@ namespace ProjektZespołówka.Data
             {
                 new User {
                     Id = adminId,
-                    email = "admin@cloudwire.pl",
-                    passwordHash = "Admin123!",
+                    Email = "admin@cloudwire.pl",
+                    PasswordHash = "Admin123!",
                     Name_Surname = "Jan Kowalski",
                     role = Helpers.UserRole.Admin,
                     createdAt = DateTime.UtcNow
                 },
                 new User {
                     Id = managerId,
-                    email = "manager@cloudwire.pl",
-                    passwordHash = "Manager123!",
+                    Email = "manager@cloudwire.pl",
+                    PasswordHash = "Manager123!",
                     Name_Surname = "Anna Nowak",
                     role = Helpers.UserRole.Manager,
                     createdAt = DateTime.UtcNow
                 },
                 new User {
                     Id = technician1Id,
-                    email = "tech1@cloudwire.pl",
-                    passwordHash = "Tech123!",
+                    Email = "tech1@cloudwire.pl",
+                    PasswordHash = "Tech123!",
                     Name_Surname = "Piotr Wiśniewski",
                     role = Helpers.UserRole.ServiceWorker,
                     createdAt = DateTime.UtcNow
                 },
                 new User {
                     Id = technician2Id,
-                    email = "tech2@cloudwire.pl",
-                    passwordHash = "Tech123!",
+                    Email = "tech2@cloudwire.pl",
+                    PasswordHash = "Tech123!",
                     Name_Surname = "Marta Zielińska",
                     role = Helpers.UserRole.ServiceWorker,
                     createdAt = DateTime.UtcNow
                 },
                 new User {
                     Id = investorId,
-                    email = "investor@firma.pl",
-                    passwordHash = "Investor123!",
+                    Email = "investor@firma.pl",
+                    PasswordHash = "Investor123!",
                     Name_Surname = "Robert Firma",
                     role = Helpers.UserRole.Investor,
                     createdAt = DateTime.UtcNow
