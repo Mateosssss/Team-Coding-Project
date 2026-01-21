@@ -72,16 +72,17 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddFluentValidation();
-builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-builder.Services.AddAutoMapper(typeof(Program));
+// builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+// builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
     dbContext.Database.EnsureCreated(); 
-    DbSeeder.Initialize(dbContext);
+    await DbSeeder.InitializeAsync(dbContext, userManager);
 }
 
 if (app.Environment.IsDevelopment())

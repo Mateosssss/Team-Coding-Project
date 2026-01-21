@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjektZespołówka.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProjektZespołówka.Data
 {
     public static class DbSeeder
     {
-        public static void Initialize(AppDbContext context)
+        public static async Task InitializeAsync(AppDbContext context, UserManager<User> userManager)
         {
             context.Database.EnsureCreated();
 
@@ -20,53 +21,55 @@ namespace ProjektZespołówka.Data
             var technician2Id = Guid.NewGuid();
             var investorId = Guid.NewGuid();
 
-            // users
-            var users = new User[]
+            // users - created with UserManager to properly hash passwords
+            var users = new (User user, string password)[]
             {
-                new User {
+                (new User {
                     Id = adminId,
                     Email = "admin@cloudwire.pl",
-                    PasswordHash = "Admin123!",
+                    UserName = "admin@cloudwire.pl",
                     Name_Surname = "Jan Kowalski",
                     role = Helpers.UserRole.Admin,
                     createdAt = DateTime.UtcNow
-                },
-                new User {
+                }, "Admin123!"),
+                (new User {
                     Id = managerId,
                     Email = "manager@cloudwire.pl",
-                    PasswordHash = "Manager123!",
+                    UserName = "manager@cloudwire.pl",
                     Name_Surname = "Anna Nowak",
                     role = Helpers.UserRole.Manager,
                     createdAt = DateTime.UtcNow
-                },
-                new User {
+                }, "Manager123!"),
+                (new User {
                     Id = technician1Id,
                     Email = "tech1@cloudwire.pl",
-                    PasswordHash = "Tech123!",
+                    UserName = "tech1@cloudwire.pl",
                     Name_Surname = "Piotr Wiśniewski",
                     role = Helpers.UserRole.ServiceWorker,
                     createdAt = DateTime.UtcNow
-                },
-                new User {
+                }, "Tech123!"),
+                (new User {
                     Id = technician2Id,
                     Email = "tech2@cloudwire.pl",
-                    PasswordHash = "Tech123!",
+                    UserName = "tech2@cloudwire.pl",
                     Name_Surname = "Marta Zielińska",
                     role = Helpers.UserRole.ServiceWorker,
                     createdAt = DateTime.UtcNow
-                },
-                new User {
+                }, "Tech123!"),
+                (new User {
                     Id = investorId,
                     Email = "investor@firma.pl",
-                    PasswordHash = "Investor123!",
+                    UserName = "investor@firma.pl",
                     Name_Surname = "Robert Firma",
                     role = Helpers.UserRole.Investor,
                     createdAt = DateTime.UtcNow
-                },
+                }, "Investor123!")
             };
 
-            context.Users.AddRange(users);
-            context.SaveChanges();
+            foreach (var (user, password) in users)
+            {
+                await userManager.CreateAsync(user, password);
+            }
 
             // localizations
             var locationId = Guid.NewGuid();

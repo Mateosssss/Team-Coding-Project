@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjektZespołówka")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+84d44cb5e55a15a3e76d400c45cc9dfcfc598391")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49d97f551b41f1a35c1cd693e7bca3dc9907b758")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjektZespołówka")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjektZespołówka")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
