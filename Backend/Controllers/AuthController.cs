@@ -12,14 +12,21 @@ namespace ProjektZespołówka.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDtoRegister request)
         {
-            var user = await authService.RegisterAsync(request);
-            
-            if (user == null)
+            try
             {
-                return BadRequest("Rejestracja nie powiodła się. Użytkownik może już istnieć.");
-            }
+                var user = await authService.RegisterAsync(request);
+                
+                if (user == null)
+                {
+                    return BadRequest("Rejestracja nie powiodła się. Użytkownik może już istnieć.");
+                }
 
-            return Ok(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Błąd: {ex.Message}");
+            }
         }
 
         [HttpPost("login")]

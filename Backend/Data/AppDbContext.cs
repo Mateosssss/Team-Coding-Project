@@ -11,7 +11,6 @@ namespace ProjektZespołówka.Data
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<User, IdentityRole<Guid>, Guid>(options)
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<WorkStages> WorkStages { get; set; }
         public DbSet<ServiceWorkerInProject> ServiceWorkerInProjects { get; set; }
         public DbSet<RoomStages> RoomsStages { get; set; }
@@ -254,6 +253,15 @@ namespace ProjektZespołówka.Data
                 entity.Property(ed => ed.UploadedAt).HasColumnName("data_wygenerowania");
                 entity.Property(ed => ed.RecipientId).HasColumnName("odbiorca").HasMaxLength(100);
             });
+
+
+            modelBuilder.Entity<User>().ToTable("Użytkownicy");
+            modelBuilder.Entity<IdentityRole<Guid>>().ToTable("Role");
+            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("Użytkownicy_Role");
+            modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("Użytkownicy_Claims");
+            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("Użytkownicy_Loginy");
+            modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("Role_Claims");
+            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("Użytkownicy_Tokeny");
         }
     }
 }

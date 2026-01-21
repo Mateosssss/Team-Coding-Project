@@ -155,6 +155,7 @@ namespace ProjektZespołówka.Data
                     LevelId = levelId,
                     Number = 101,
                     TechnicalName = "Biuro open-space",
+                    TechnicalCode = "BIURO-OS-101",
                     OutletCount = 24,
                     CoordinatesOnPlan = "{\"x\": 120, \"y\": 150, \"width\": 400, \"height\": 300}",
                     Description = "Główne biuro pracownicze"
@@ -165,6 +166,7 @@ namespace ProjektZespołówka.Data
                     LevelId = levelId,
                     Number = 102,
                     TechnicalName = "Sala konferencyjna",
+                    TechnicalCode = "SALA-KONF-102",
                     OutletCount = 12,
                     CoordinatesOnPlan = "{\"x\": 600, \"y\": 150, \"width\": 500, \"height\": 400}",
                     Description = "Sala na spotkania i prezentacje"
@@ -175,6 +177,7 @@ namespace ProjektZespołówka.Data
                     LevelId = levelId,
                     Number = 103,
                     TechnicalName = "Serwerownia",
+                    TechnicalCode = "SERWER-103",
                     OutletCount = 8,
                     CoordinatesOnPlan = "{\"x\": 50, \"y\": 500, \"width\": 300, \"height\": 250}",
                     Description = "Pomieszczenie techniczne z szafami rack"

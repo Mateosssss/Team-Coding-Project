@@ -37,16 +37,15 @@ namespace ProjektZespołówka.Services
            UserName = request.Email, 
            Name_Surname = request.Name_Surname,
            createdAt = DateTime.UtcNow,
-
            role = Helpers.UserRole.ServiceWorker 
        };
 
-      
        var result = await userManager.CreateAsync(user, request.Password);
 
        if (!result.Succeeded)
        {
-           return null;
+           var errors = string.Join(", ", result.Errors.Select(e => $"{e.Code}: {e.Description}"));
+           throw new Exception($"Nie udało się utworzyć użytkownika: {errors}");
        }
 
        return user;

@@ -28,7 +28,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 // Add Identity
-builder.Services.AddIdentity<User, IdentityRole<Guid>>()
+builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 8;
+})
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
@@ -47,7 +54,8 @@ builder.Services.AddScoped<IMeasurmentsService, MeasurmentsService>();
 builder.Services.AddScoped<IExecutiveDocumentsService, ExecutiveDocumentsService>();
 builder.Services.AddScoped<IWorkStagesService, WorkStagesService>();
 
-builder.Services.AddFluentValidation();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -71,17 +79,12 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddFluentValidation();
-// builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-// builder.Services.AddAutoMapper(typeof(Program));
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-    dbContext.Database.EnsureCreated(); 
     await DbSeeder.InitializeAsync(dbContext, userManager);
 }
 
