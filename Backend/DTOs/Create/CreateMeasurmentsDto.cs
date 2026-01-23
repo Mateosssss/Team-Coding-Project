@@ -12,7 +12,7 @@ namespace ProjektZespołówka.DTOs.Create
         public Guid ServiceWorkerId { get; set; }
         public Guid AttachmentId { get; set; }
         public MeasurementType Type { get; set; }
-        public string TechnicalDetails { get; set; }
+        public string? TechnicalDetails { get; set; }
         public DateTime MeasuredAt { get; set; }
         public CertificationStatus Certification { get; set; }
     }

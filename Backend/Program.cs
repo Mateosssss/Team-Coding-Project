@@ -1,21 +1,28 @@
+using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using ProjektZespołówka.Data;
+using ProjektZespołówka.Mappers;
+using ProjektZespołówka.Models;
 using ProjektZespołówka.Services;
 using ProjektZespołówka.Services.Interfaces;
-using ProjektZespołówka.Models;
-using Scalar.AspNetCore;
-using FluentValidation.AspNetCore;
-using FluentValidation;
 using ProjektZespołówka.Validators;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Identity;
+using Scalar.AspNetCore;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+
+
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -27,7 +34,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         });
 });
 
-// Add Identity
 builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
 {
     options.Password.RequireDigit = true;
@@ -38,8 +44,7 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
 })
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
-
-// Register services
+    
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
@@ -57,7 +62,7 @@ builder.Services.AddScoped<IWorkStagesService, WorkStagesService>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-builder.Services.AddAutoMapper(typeof(Program));
+
 
 builder.Services.AddAuthentication(options => 
 {
@@ -88,11 +93,11 @@ using (var scope = app.Services.CreateScope())
     await DbSeeder.InitializeAsync(dbContext, userManager);
 }
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference();
+    app.UseDeveloperExceptionPage();
 }
+
 
 app.UseHttpsRedirection();
 

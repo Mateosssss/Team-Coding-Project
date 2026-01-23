@@ -11,7 +11,7 @@ namespace ProjektZespołówka.Models
         public Guid Id { get; set; }
         public Guid RoomId { get; set; }
         public Guid ServedById { get; set; }
-        public string TechnicalName { get; set; }
+        public string? TechnicalName { get; set; }
         public int OutletCount { get; set; } 
         public OutletType Type { get; set; }
         public Guid NearPhotoId { get; set; }   

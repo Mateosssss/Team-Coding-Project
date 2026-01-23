@@ -66,7 +66,7 @@ namespace ProjektZespołówka.Services
         {
             return new TokenResponseDto
             {
-                AccessToken = await CreateToken(user),
+                AccessToken = CreateToken(user),
                 RefreshToken = await GenerateAndSaveRefreshTokenAsync(user)
             };
         }
@@ -86,7 +86,7 @@ namespace ProjektZespołówka.Services
             return refreshToken;
         }
 
-        private async Task<string> CreateToken(User user)
+        private string CreateToken(User user)
         {
             var claims = new List<Claim>
             {

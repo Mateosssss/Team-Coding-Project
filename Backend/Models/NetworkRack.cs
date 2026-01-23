@@ -9,9 +9,9 @@ namespace ProjektZespołówka.Models
     {
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
-        public string Model { get; set; }
-        public string Size { get; set; }
-        public string Location { get; set; }
+        public string? Model { get; set; }
+        public string? Size { get; set; }
+        public string? Location { get; set; }
         public Guid FrontViewImageId { get; set; }
         public Guid SideViewImageId { get; set; }
         public Guid RearViewImageId { get; set; }

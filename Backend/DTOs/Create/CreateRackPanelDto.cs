@@ -8,8 +8,8 @@ namespace ProjektZespołówka.DTOs.Create
     public class CreateRackPanelDto
     {
         public Guid NetworkRackId { get; set; }
-        public string Type { get; set; }
+        public string? Type { get; set; }
         public int PortNumber { get; set; }
-        public string Position { get; set; }
+        public string? Position { get; set; }
     }
 }

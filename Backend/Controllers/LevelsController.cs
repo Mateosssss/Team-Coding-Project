@@ -23,8 +23,15 @@ namespace ProjektZespołówka.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LevelsDto>>> GetAll()
         {
-            var levels = await _service.GetAllAsync();
-            return Ok(levels);
+            try
+            {
+                var levels = await _service.GetAllAsync();
+                return Ok(levels);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Błąd backendu: {ex.Message}");
+            }
         }
 
         [HttpGet("{id}")]
