@@ -48,7 +48,7 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
-builder.Services.AddScoped<ILevelsService, LevelService>();
+builder.Services.AddScoped<ILevelService, LevelService>();
 builder.Services.AddScoped<IOutletService, OutletService>();
 builder.Services.AddScoped<INetworkRackService, NetworkRackService>();
 builder.Services.AddScoped<IRackPanelService, RackPanelService>();
@@ -95,7 +95,8 @@ using (var scope = app.Services.CreateScope())
 
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
-    app.UseDeveloperExceptionPage();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 
