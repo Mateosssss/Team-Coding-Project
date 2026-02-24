@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Ten plik jest wykorzystywany przez proces publikowania/pakowania projektu internetowego. Możesz dostosować zachowanie tego procesu
+ poprzez edycję tego pliku MSBuild. Aby dowiedzieć się więcej o tym działaniu, odwiedź stronę https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <History>True|2026-01-28T13:04:36.7396388Z||;True|2026-01-23T16:14:53.7671683+01:00||;False|2026-01-23T16:13:55.1425528+01:00||;False|2026-01-23T16:13:42.0243958+01:00||;False|2026-01-23T16:11:58.3374684+01:00||;False|2026-01-23T16:11:41.9557224+01:00||;False|2026-01-23T16:11:24.4658242+01:00||;False|2026-01-23T16:11:00.1004570+01:00||;True|2026-01-23T15:14:57.2778050+01:00||;True|2026-01-23T14:44:16.6057113+01:00||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>
