@@ -95,13 +95,13 @@ http://localhost:5000
 
 Projekt używa Entity Framework Core do zarządzania bazą danych.
 
-*DbContext w folderze Data/
+* DbContext w folderze Data/
 
-*Migracje w folderze Migrations/
+* Migracje w folderze Migrations/
 
-*Modele danych w Models/
+* Modele danych w Models/
 
-*DTO w DTOs/
+* DTO w DTOs/
 
 ---
 
