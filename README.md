@@ -65,6 +65,7 @@ dotnet restore
 
 ### 3️⃣ Konfiguracja zmiennych środowiskowych
 Edytuj appsettings.json i appsettings.Development.json:
+```
 {
   "ConnectionStrings": {
     "DefaultConnection": "Server=<DB_SERVER>;Database=<DB_NAME>;User Id=<USER>;Password=<PASSWORD>;"
@@ -74,7 +75,7 @@ Edytuj appsettings.json i appsettings.Development.json:
     "ExpiryMinutes": 60
   }
 }
-
+```
 ---
 
 ### 4️⃣ Uruchomienie aplikacji
